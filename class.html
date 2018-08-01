@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title>课程名单</title>
+		<link rel="stylesheet" href="Class/css/class.css" />
+		<meta http-equiv="Page-Enter" content="revealTrans(Duration=1.0,Transition=4)">
+	</head>
+
+	<body>
+		<div id="chartmain"></div>
+		<p id="count">
+		</br>旷课人数：0&nbsp&nbsp&nbsp&nbsp已到人数：0&nbsp&nbsp&nbsp&nbsp迟到人数：0&nbsp&nbsp&nbsp&nbsp请假人数：0</p>
+	    <div id="hidetable">
+	    <button id="hide2">显示/隐藏 旷课人员</button>
+		<button id="hide">显示/隐藏 已到人员</button>
+		<button id="hide3">显示/隐藏 迟到人员</button>
+		<button id="hide4">显示/隐藏 请假人员</button>
+		</div>
+		<fieldset class="mingdan">
+			<div id="d1">
+				<button type="button" class="bt" id="bt" onclick="func(this)">1</button>
+			</div>
+			<div id="popup">
+				<div id="popup-content">
+					<h1>学生考勤信息</h1>
+					<p>请选择考勤状态</p>
+					<button id="truancy">旷课</button>
+					<button id="attent">已到</button>
+					<button id="later">迟到</button>
+					<button id="absent">请假</button>
+				</div>
+				<div id="popup-bg"></div>
+			</div>
+		</fieldset>
+           	<div class="container" style="text-align: center;color: #FFFFFF;">
+   		<div class="copy">
+		  <p>Copyright &copy; 2018.the college students innovations special project.</p>
+		</div>
+		<div class="clearfix"></div>
+   	</div>
+   </div>
+		<script type="text/javascript" src="Class/js/echarts.common.min.js"></script>
+		<script type="text/javascript" src="Class/js/jquery-3.2.1.min.js"></script>
+		<script type="text/javascript">
+			var Obj;
+			var d1 = document.getElementById("d1");
+			var bt = document.getElementById("bt");
+			var n = 1;
+			for(var i = 0; i < 8; i++) {
+				for(var j = 0; j < 8; j++) {
+					var newbt = bt.cloneNode(true); //每个元素都有克隆方法
+					newbt.id += n;
+					newbt.innerHTML = n;
+					d1.appendChild(newbt);
+					n++;
+					d1.innerHTML += "&nbsp";
+				};
+				d1.innerHTML += "<br>";
+			};
+
+			var func = function(obj) {
+				//alert(obj.value);
+				//alert(obj.id);
+				Obj = obj;
+			};
+
+			var _arr1 = [];
+			var _arr2 = [];
+			var _arr3 = [];
+			var _arr4 = [];
+			var _arr = [_arr1, _arr2, _arr3, _arr4];
+			var funw = function(a, arr) {
+				for(var n = 0; n < _arr.length; n++) {
+					if(_arr[n]!= arr) {
+						_arr[n].remove(a);
+					};
+				}; //去除其它数组中的该元素
+				
+				if($.inArray(a, arr) < 0) {
+					arr.push(a);
+				}; //重复元素不添加					
+				document.getElementById("count").innerHTML = "</br>旷课人数：" + _arr1.length + "&nbsp&nbsp&nbsp&nbsp已到人数：" + _arr2.length + "&nbsp&nbsp&nbsp&nbsp迟到人数：" + _arr3.length + "&nbsp&nbsp&nbsp&nbsp请假人数：" + _arr4.length;
+			};
+			
+		    var funx=function(n){
+			    option.series[0].data[n].value=_arr[n].length;
+				 //初始化echarts实例
+				var myChart = echarts.init(document.getElementById('chartmain'));
+				 //使用制定的配置项和数据显示图表
+				myChart.setOption(option);
+                 //alert(option.series[0].data.length);			
+		    };
+
+			Array.prototype.indexOf = function(val) {
+				for(var i = 0; i < this.length; i++) {
+					if(this[i] == val) return i;
+				};
+				return -1;
+			}; //获取元素的检索
+
+			Array.prototype.remove = function(val) {
+				var index = this.indexOf(val);
+				if(index > -1) {
+					this.splice(index,1);
+				};
+			}; //根据检索去除元素
+
+            var flag2 = true ;
+            var flag = true ;
+            var flag3 = true ;
+            var flag4 = true ;
+            var ohide2 = document.getElementById('hide2');
+            var ohide = document.getElementById('hide');
+            var ohide3 = document.getElementById('hide3');
+            var ohide4 = document.getElementById('hide4');
+           $(document).ready(function() { 
+            $('#hide2').click(function(){            	
+            	$("[value=truancyed]").toggle();
+            	flag2=!flag2;  
+            	flag2?ohide2.style.backgroundColor="#E74C3C":ohide2.style.backgroundColor="#DDD";  
+            }); 
+           	
+            $('#hide').click(function(){            	
+            	$("[value=attented]").toggle();
+            	flag=!flag;  
+            	flag?ohide.style.backgroundColor="#00CD00":ohide.style.backgroundColor="#DDD";  
+            }); 
+            
+            $('#hide3').click(function(){            	
+            	$("[value=latered]").toggle();
+            	flag3=!flag3;  
+            	flag3?ohide3.style.backgroundColor="#6495ED":ohide3.style.backgroundColor="#DDD";  
+            }); 
+            
+            $('#hide4').click(function(){            	
+            	$("[value=absented]").toggle();
+            	flag4=!flag4;  
+            	flag4?ohide4.style.backgroundColor=" #FF7F00":ohide4.style.backgroundColor="#DDD";  
+            }); 
+           });
+
+
+			$(document).ready(function() { //弹出状态窗口
+				$('.bt,#truancy,#popup-bg,#attent,#absent,#later').click(function(e) {
+					e.preventDefault(); //阻止默认事件
+					$('#popup').toggleClass('show'); //切换show类
+					$('#popup-content').toggleClass('show');
+				});
+			});
+
+			$(document).ready(function() {
+				$('#truancy').click(function(e) {
+					e.preventDefault(); //阻止默认事件
+					$("#" + Obj.id).css("background-color", "#E74C3C");
+					Obj.value = "truancyed";
+					if(!flag2) {
+				    $("[value=truancyed]").hide();
+					};
+					funw(Obj.id, _arr1);
+					option.series[0].data[1].value=_arr[1].length;
+					option.series[0].data[2].value=_arr[2].length;
+					option.series[0].data[3].value=_arr[3].length;
+					funx(0);
+					//alert(option.series[0].data[0].value);
+				});
+			});
+
+			$(document).ready(function() {
+				$('#attent').click(function(e) {
+					e.preventDefault(); //阻止默认事件
+					$("#" + Obj.id).css("background-color", "#00CD00");
+					Obj.value = "attented";
+					if(!flag) {
+				    $("[value=attented]").hide();
+					};
+					funw(Obj.id, _arr2);
+					option.series[0].data[0].value=_arr[0].length;
+					option.series[0].data[2].value=_arr[2].length;
+					option.series[0].data[3].value=_arr[3].length;
+					funx(1);
+					//alert(option.series[0].data[1].value);
+				});
+			});
+
+			$(document).ready(function() {
+				$('#later').click(function(e) {
+					e.preventDefault(); //阻止默认事件
+					$("#" + Obj.id).css("background-color", "#6495ED");
+					Obj.value = "latered";
+					if(!flag3) {
+				    $("[value=latered]").hide();
+					};
+					funw(Obj.id, _arr3);
+					option.series[0].data[0].value=_arr[0].length;
+					option.series[0].data[1].value=_arr[1].length;
+					option.series[0].data[3].value=_arr[3].length;
+					funx(2);
+					//alert(option.series[0].data[2].value);
+				});
+			});
+
+			$(document).ready(function() {
+				$('#absent').click(function(e) {
+					e.preventDefault(); //阻止默认事件
+					$("#" + Obj.id).css("background-color", "#FF7F00");
+					Obj.value ="absented";
+					if(!flag4) {
+				    $("[value=absented]").hide();
+					};					
+					funw(Obj.id, _arr4);
+					option.series[0].data[0].value=_arr[0].length;
+					option.series[0].data[1].value=_arr[1].length;
+					option.series[0].data[2].value=_arr[2].length;
+					funx(3);					
+					//alert(option.series[0].data[3].value);					
+				});
+			});
+
+
+
+//指定图标的配置和数据
+	var option = {
+    title : {
+        text: '班级考勤情况',
+        x:'center'
+    },
+    tooltip : {
+        trigger: 'item',
+        formatter: "{a} <br/>{b} : {c} ({d}%)"
+    },
+    legend: {
+        orient : 'vertical',
+        x : 'left',
+        data:['旷课','已到','迟到','请假']
+    },
+    toolbox: {
+        show : true,
+        feature : {
+            mark : {show: true},
+            dataView : {show: true, readOnly: false},
+            magicType : {
+                show: true, 
+                type: ['pie', 'funnel'],
+                option: {
+                    funnel: {
+                        x: '25%',
+                        width: '50%',
+                        funnelAlign: 'left',
+                        max: 64
+                    }
+                }
+            },
+            restore : {show: true},
+            saveAsImage : {show: true}
+        }
+    },
+    calculable : true,
+				series: [{
+					name: '人数',
+					type: 'pie',
+					radius: '60%',
+					data: [{
+							value: 0,
+							name: '旷课'						
+						},
+						{
+							value: 0,
+							name: '已到',
+							itemStyle: {color: '#00CD00'}
+						},
+						{
+							value: 0,
+							name: '迟到',
+							itemStyle: {color: '#6495ED'}
+						},
+						{
+							value: 0,
+							name: '请假',
+							itemStyle: {color: '#FF7F00'}
+						}
+					]
+				}]		
+			};
+		//初始化echarts实例
+        var myChart = echarts.init(document.getElementById('chartmain'));
+        //使用制定的配置项和数据显示图表
+        myChart.setOption(option);
+        
+		</script>
+	</body>
+</html>

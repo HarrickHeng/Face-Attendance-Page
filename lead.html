@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" >
+		<title>刷脸考勤系统</title>
+		<link href="Lead Page/css/css.css" rel="stylesheet">	
+		<meta http-equiv="Page-Enter" content="revealTrans(Duration=1.0,Transition=4)">
+	</head>
+	<body>
+		<article id="tablet">
+			<img  src="Lead Page/img/logo.png" alt="tablet" >
+			<h1>刷脸考勤系统</h1>
+			<p>传统考勤系统经常会出现“代签”和扫完码后早退的这两种问题。在这种紧迫的需求背景下缺少人脸识别来判断是否是本人的一项功能，从而解决“代签”这一问题的出现，因为“代签”这一问题已经逐渐成为当前大学校园课堂上的常态；使用安卓平台上自带的GPS功能和百度地图API Key来完成实时监控，从而解决早退问题。实施该项目的目的正在于解决这一迫切的需求，利用该趋势将“刷脸考勤系统”App软件推向广大学校，实现盈利。</p>
+			<a href="#face">下一页</a>
+		</article>
+		<article id="face">
+			<img src="Lead Page/img/logo.png" alt="tablet" >
+			<h1>刷脸考勤系统</h1>
+			<p>国外企业基本上都使用指纹识别打卡系统和人脸识别相结合来完成考勤；而国内企业大都只使用指纹识别功能完成考勤。通过调查本校70%学生手机具备指纹识别功能，还有30%学生手机不支持该功能。也鉴于现在的人脸识别技术很成熟，所以我们小组最终决定使用人脸识别来完成考勤。实现该项目不但能让学校的考勤系统更加完善，同时还能保证学生在校学习的学习质量，使软件服务于对象，又让对象服务于软件，因为人脸识别的主要核心还是用户注册时所提供的样图，从而真正意义上解决传统考勤系统所带来的缺陷。</p>
+			<a href="#tablet">上一页</a>
+			<a href="demo.html" id="cut">进入首页</a>
+		</article>
+<script type="text/javascript" src="Lead Page/js/jquery-3.2.1.min.js"></script>
+<script type="text/javascript">
+	$(document).ready(function() {
+		$('a').click(function(e){
+			e.preventDefault();
+			$('#tablet').toggleClass('move');
+			$('#face').toggleClass('move');
+		});
+	});
+	
+	$(document).ready(function() {
+		$('#cut').click(function(e){
+		window.location.href="index.html"
+		});
+	});
+</script>
+</body>

@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>教师课表</title>
+		<link rel="stylesheet" href="Class/css/class.css" />
+	</head>
+	<body>
+		<h1 style="text-align: center;color: #FFF;">教师课表</h1>
+		<section id="tab-container">
+			<ul id="tab-nav">
+				<li><a href="#Mon" id="nav-Mon">星期一</a></li>
+				<li><a href="#Tue" id="nav-Tue">星期二</a></li>
+				<li><a href="#Wed" id="nav-Wed">星期三</a></li>
+				<li><a href="#Thu" id="nav-Thu">星期四</a></li>
+				<li><a href="#Fri" id="nav-Fri">星期五</a></li>
+				<li><a href="#Sat" id="nav-Sat">星期六</a></li>
+				<li><a href="#Sun" id="nav-Sun">星期日</a></li>
+			</ul>
+			<div id="tab-content">
+			<div id="Mon">
+		    <ul id="u1">
+		     <li id="li" class="li" onclick='fung(this)'></li>		     
+		    </ul>
+		    <button class="addclass" onclick='add1(this)'>添加课程</button>
+			</div>
+			<div id="Tue">
+		    <ul id="u2">
+			<li id="li" class="li" onclick='fung(this)'></li>			 
+		    </ul>
+		    <button class="addclass" onclick='add2(this)'>添加课程</button>
+			</div>
+			<div id="Wed">
+			<ul id="u3">
+			 <li id="li" class="li" onclick='fung(this)'></li>
+		    </ul>
+		    <button class="addclass" onclick='add3(this)'>添加课程</button>
+			</div>
+			<div id="Thu">
+			<ul id="u4">
+			 <li id="li" class="li" onclick='fung(this)'></li>		 
+		    </ul>
+		    <button class="addclass" onclick='add4(this)'>添加课程</button>
+			</div>
+			<div id="Fri">
+			<ul id="u5">
+			 <li id="li" class="li" onclick='fung(this)'></li>
+		    </ul>
+		    <button class="addclass" onclick='add5(this)'>添加课程</button>
+			</div>
+			<div id="Sat">
+			<ul id="u6">
+		    <li id="li" class="li" onclick='fung(this)'></li>
+		    </ul>
+		     <button class="addclass" onclick='add6(this)'>添加课程</button>
+			</div>
+			<div id="Sun">
+		    <ul id="u7">
+		    <li id="li" class="li" onclick='fung(this)'></li>		  
+		    </ul>
+		     <button class="addclass" onclick='add7(this)'>添加课程</button>
+			</div>
+			</div>
+		</section>
+	    <form method="post" id="classform" action="#">
+	    	<div id="classform-content" style="height: auto;">
+	    		<h1>课程信息</h1>
+            <p><label>课程名称：<input name="name" type="text" placeholder="请输入课程名称"></label></p>
+			<p><label>教师姓名：<input name="teacherName" type="text" placeholder="请输入教师姓名"></label></p>
+	    	<p><label for="week">上课星期：&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+	    	<select name="classtime" style="width:120px;">
+	    			<option value="星期一">星期一</option>
+	    			<option value="星期二">星期二</option>
+	    			<option value="星期三">星期三</option>
+	    			<option value="星期四">星期四</option>
+	    			<option value="星期五">星期五</option>
+	    			<option value="星期六">星期六</option>
+	    			<option value="星期日">星期日</option>
+	    		</select>
+	    	</p>
+	    	<p><label>课程节数：第<input name="startNum" type="number" style="width:30px;">节&nbsp;至&nbsp;第<input name="endNum" type="number" style="width: 30px;">节</label></p>
+	    	<p><label>课程时间：<input name="startTime" type="time">至<input name="endTime" type="time"></label></p>			
+			<p><label>所在课室：&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input name="classRoom" type="text" placeholder="请输入所上课的课室"></label></p>
+			<p><label>周数时长：&nbsp;&nbsp;共&nbsp;&nbsp;<input name="weekNum" type="number" placeholder="请输入所需周数" style="width:110px;text-align: center;"></label>&nbsp;&nbsp;周</p>
+			<input type="submit" class="login_btn layui-btn layui-btn-radius layui-btn-normal" value="完成添加">
+	    	</div>
+	    	<div id="classform-bg"></div>
+	    </form>
+	    	<div class="container" style="text-align: center;color: #FFFFFF;">
+   		<div class="copy">
+		  <p>Copyright &copy; 2018.the college students innovations special project.</p>
+		</div>
+		<div class="clearfix"></div>
+   	</div>
+   </div>
+    <script type="text/javascript" src="Class/js/jquery-3.2.1.min.js"></script>
+    <script type="text/javascript">
+    	
+    	    var nav_Mon=document.getElementById("nav-Mon");
+    	    var nav_Tue=document.getElementById("nav-Tue");
+    	    var nav_Wed=document.getElementById("nav-Wed");
+    	    var nav_Thu=document.getElementById("nav-Thu");
+    	    var nav_Fri=document.getElementById("nav-Fri");
+    	    var nav_Sat=document.getElementById("nav-Sat");
+    	    var nav_Sun=document.getElementById("nav-Sun");
+    	    var Mon=document.getElementById("Mon");
+    	    var Tue=document.getElementById("Tue");
+    	    var Wed=document.getElementById("Wed");
+    	    var Thu=document.getElementById("Thu");
+    	    var Fri=document.getElementById("Fri");
+    	    var Sat=document.getElementById("Sat");
+    	    var Sun=document.getElementById("Sun");   	   
+    	    var week=[Sun,Mon,Tue,Wed,Thu,Fri,Sat]
+
+    	    var Obj;
+            var myDate = new Date();
+            var mytime = myDate.toLocaleString( );
+            var myweek = myDate.getDay();            
+			var u1 = document.getElementById("u1");
+			var li = document.getElementById("li");
+			var n=1;　
+    	   
+        function hideAll(){ //将所有内容都设置为隐藏，并清楚所有链接的类样式
+    	    Mon.style.display = "none";
+    	    Tue.style.display = "none";
+    	    Wed.style.display = "none";
+    	    Thu.style.display = "none";
+    	    Fri.style.display = "none";
+    	    Sat.style.display = "none";
+    	    Sun.style.display = "none";
+    	    nav_Mon.className = "";	
+    	    nav_Tue.className = "";	
+    	    nav_Wed.className = "";	
+    	    nav_Mon.className = "";	
+    	    nav_Thu.className = "";	
+    	    nav_Fri.className = "";
+    	    nav_Sat.className = "";	
+    	    nav_Sun.className = "";	
+    	};   	    	
+    	
+
+
+    	    if(myweek==0) {  
+    	    week[1].style.display = "none";
+            week[2].style.display = "none";
+            week[3].style.display = "none";
+            week[5].style.display = "none";
+            week[6].style.display = "none";
+            week[4].style.display = "none";
+    	    nav_Sun.className = "active";
+    	    $('#classweek').val("星期日");
+            };
+            
+            if(myweek==1) {  
+            week[4].style.display = "none";
+            week[2].style.display = "none";
+            week[3].style.display = "none";
+            week[5].style.display = "none";
+            week[6].style.display = "none";
+            week[0].style.display = "none";
+    	    nav_Mon.className = "active";
+    	    $('#classweek').val("星期一");
+            };
+            
+            if(myweek==2) {   
+            week[1].style.display = "none";
+            week[4].style.display = "none";
+            week[3].style.display = "none";
+            week[5].style.display = "none";
+            week[6].style.display = "none";
+            week[0].style.display = "none";
+    	    nav_Tue.className = "active";
+    	    $('#classweek').val("星期二");
+            };
+            
+            if(myweek==3) {   
+            week[1].style.display = "none";
+            week[2].style.display = "none";
+            week[4].style.display = "none";
+            week[5].style.display = "none";
+            week[6].style.display = "none";
+            week[0].style.display = "none";
+    	    nav_Wed.className = "active";
+    	    $('#classweek').val("星期三");
+            };
+            
+            if(myweek==4) {       
+            week[1].style.display = "none";
+            week[2].style.display = "none";
+            week[3].style.display = "none";
+            week[5].style.display = "none";
+            week[6].style.display = "none";
+            week[0].style.display = "none";
+    	    nav_Thu.className = "active";
+    	    $('#classweek').val("星期四");
+            };
+            
+            if(myweek==5) {     
+            week[1].style.display = "none";
+            week[2].style.display = "none";
+            week[3].style.display = "none";
+            week[4].style.display = "none";
+            week[6].style.display = "none";
+            week[0].style.display = "none";
+    	    nav_Fri.className = "active";
+    	    $('#classweek').val("星期五");
+            };
+            
+            if(myweek==6) {    
+            week[1].style.display = "none";
+            week[2].style.display = "none";
+            week[3].style.display = "none";
+            week[5].style.display = "none";
+            week[4].style.display = "none";
+            week[0].style.display = "none";
+    	    nav_Sat.className = "active";
+    	    $('#classweek').val("星期六");
+            };
+
+    	
+    	nav_Mon.onclick = function(){
+    		hideAll();
+    		Mon.style.display = "block";
+    		nav_Mon.className = "active";
+    		$('#classweek').val("星期一");
+    	};
+    	
+    	nav_Tue.onclick = function(){
+    		hideAll();
+    		Tue.style.display = "block";
+    		nav_Tue.className = "active";
+    		$('#classweek').val("星期二");
+    	};
+    	
+    	nav_Wed.onclick = function(){
+    		hideAll();
+    		Wed.style.display = "block";
+    		nav_Wed.className = "active";
+    		$('#classweek').val("星期三");
+    	};
+    	
+    	nav_Thu.onclick = function(){
+    		hideAll();
+    		Thu.style.display = "block";
+    		nav_Thu.className = "active";
+    		$('#classweek').val("星期四");
+    	};
+    	
+    	nav_Fri.onclick = function(){
+    		hideAll();
+    		Fri.style.display = "block";
+    		nav_Fri.className = "active";
+    		$('#classweek').val("星期五");
+    	};
+    	
+    	nav_Sat.onclick = function(){
+    		hideAll();
+    		Sat.style.display = "block";
+    		nav_Sat.className = "active";
+    		$('#classweek').val("星期六");
+    	};
+    	
+    	nav_Sun.onclick = function(){
+    		hideAll();
+    		Sun.style.display = "block";
+    		nav_Sun.className = "active";
+    		$('#classweek').val("星期日");
+    	};
+    	
+　                             
+			    var add=function(id) {			    	
+			    	var newli=li.cloneNode(true);//每个元素都有克隆方法			    	
+					newli.id += n;
+					newli.value += n;
+					newli.innerHTML ="Class"+n+"<input type='button' id='edit' alt='编辑课程' value='' onclick='edit(event)'/>"+"<input type='button' id='del' alt='删除课程' value='' onclick='del(event)'/>";
+					id.appendChild(newli);
+					n++;
+			    };		    			   			   					   		
+                	
+                $(document).ready(function() { //弹出状态窗口
+				$('#classform-bg,#finish').click(function(e) {
+					e.preventDefault(); //阻止默认事件
+					$('#classform').toggleClass('show'); //切换show类
+					$('#classform-content').toggleClass('show');
+				});
+			});				   		
+			   		
+			   	function edit(event){
+			   		stopBubbling(event);//防止底部事件被点击
+			   		$('#classdate').val(mytime);			   		
+			   		$('#classform').toggleClass('show'); //切换show类
+					$('#classform-content').toggleClass('show');
+			   	};
+			   		
+			   	function del(event){//删除课程		
+			   		stopBubbling(event);//防止底部事件被点击
+			   		if(window.confirm('你确定删除该课程？')){
+			   		var obj = event.srcElement||event.target;
+                    var li  = obj.parentNode; 
+                    li.remove(); 
+                    //alert("删除成功");
+                    return true;
+                    }else{
+                   // alert("取消");
+                    return false;
+                   };                    
+                };		
+			   		
+			   	function stopBubbling(e) {
+                e = window.event || e;
+                if (e.stopPropagation) {
+                e.stopPropagation();      //阻止事件 冒泡传播
+                } else {
+                e.cancelBubble = true;   //IE兼容
+                 };
+               };	
+			   		
+                var add1=function(obj){
+                	add(u1);
+                };
+			
+			    var add2=function(obj){
+					add(u2);
+                };
+			
+			    var add3=function(obj){
+                    add(u3);
+                };
+			
+			    var add4=function(obj){
+                    add(u4);
+                };
+                
+                var add5=function(obj){
+                    add(u5);
+                };
+			
+			    var add6=function(obj){
+                    add(u6);
+                };
+			
+			    var add7=function(obj){
+                    add(u7);
+              };
+                
+			    var fung =function(obj){
+			    	window.location.href="class.html";
+			    };
+			
+				var func=function(obj){
+					alert(obj.value);
+					Obj=obj;
+				};
+				          
+            function buttonsubmit(){  
+            document.getElementById('classform').submit()  
+            //下面为用jquery方法提交，不过需要引入js文件  
+             $('#classform').submit();  
+            //页面刷新之后就会执行弹出框，则证明表单已经提交  
+             alert("页面已经刷新证明表单提交成功");  
+                };
+    </script>
+	</body>
+</html>
